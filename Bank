@@ -1,0 +1,155 @@
+#include <iostream>
+using namespace std;
+
+class bank {
+private:
+    static int totalAccounts;
+    int* accountNumber;
+    int* balance;
+    string* ownerName;
+    int i = 0;
+    int number = 3415051;
+
+public:
+    bank() {
+        accountNumber = new int[100]; // Assuming a maximum of 100 accounts
+        balance = new int[100];
+        ownerName = new string[100];
+    }
+
+    ~bank() {
+        delete[] accountNumber;
+        delete[] balance;
+        delete[] ownerName;
+    }
+
+    void createAccount() {
+        char anotherAccount;
+        int i =0;
+    do{
+        cout<<"\n*Fill the Details to open Account"<<endl;   
+        cout<<"Enter your name: ";
+        cin>>ownerName[i];
+        cout<<"Enter balance: ";
+        cin>>balance[i];
+        accountNumber[i] = number;
+        number++;
+        totalAccounts++;
+        i++;
+        cout<<"\nDo you want to open another Account? (Y/N): ";
+        cin>>anotherAccount;
+
+    }while (anotherAccount == 'Y' || anotherAccount == 'y');
+        display();    
+        deposit();
+    }
+
+    void deposit() {
+        char another;
+        int depositAmount;
+        int accNumber;
+        string name;
+        string option;
+        cout<<"\nDo you want to Deposit Money(y/n): ";
+        cin>>option;
+    do{
+        
+        if(option=="y" || option=="Y"){
+        cout<<"\n*****Deposit Counter*****" << endl;
+        cout<<"Enter Account number: ";
+        cin>>accNumber;
+        cout<<"Enter Account Holder name: ";
+        cin>>name;
+        cout<<"Enter Deposit amount: ";
+        cin>>depositAmount;
+        bool found = false;
+    for (int x = 0; x < totalAccounts; x++) {
+        if (accountNumber[x] == accNumber) {
+                balance[x] += depositAmount;
+                found = true;
+                break;
+            }
+        }
+    if (!found) {
+                cout<<"wrong input"<<endl;
+        }
+        cout<<"\nDo you want to Deposit another Account? (Y/N): ";
+        cin>>another;
+    }
+    }while(another=='Y' || another=='y');
+        withdraw();
+    }
+
+    void withdraw() {
+        char another;
+        int withdrawAmount;
+        int accNumber;
+        string name;
+        string option;
+        cout<<"Do you want to Withdraw Money(y/n): ";
+        cin>>option;
+    do{
+        
+        if(option=="y" || option=="Y"){
+        cout<<"\n*****Withdraw Counter*****" << endl;
+        cout<<"Enter Account number: ";
+        cin>>accNumber;
+        cout<<"Enter Account Holder name: ";
+        cin>>name;
+        cout<<"Enter Withdraw amount: ";
+        cin>>withdrawAmount;
+        bool found = false;
+    for (int x=0;x<totalAccounts;x++) {
+        if (accountNumber[x] == accNumber) {
+                balance[x] -= withdrawAmount;
+                found = true;
+                break;
+            }
+        }
+        if (!found){
+                cout<<"wrong input"<<endl;
+            }
+        cout<<"\nDo you want to Withdraw another Account? (Y/N): ";
+        cin>>another;
+       } 
+    }while (another=='Y' || another=='y');
+    }
+
+    void display() {
+        for (int y = 0; y < totalAccounts; y++) {
+            cout<<"\n*PASSBOOK"<<endl;
+            cout<<"Account Number: "<<accountNumber[y]<<endl;
+            cout<<"Account Holder: "<<ownerName[y]<<endl;
+            cout<<"Available balance: "<<balance[y]<<endl;
+        }
+    }
+    void allshow(){
+        int i=0;
+        for(i;i<totalAccounts;i++){
+            cout<<"\n---Account Details---"<<endl;
+            cout<<"Account Number: "<<accountNumber[i]<<endl;
+            cout<<"Account Holder: "<<ownerName[i]<<endl;
+            cout<<"Available balance: "<<balance[i]<<endl;
+        }
+    }
+
+    static void count() {
+        cout<<"Total Accounts: "<<totalAccounts<<endl;
+    }
+};
+
+int bank::totalAccounts = 0;
+
+int main() {
+    cout<<"        HDFC BANK" << endl;
+    bank obj;
+    obj.createAccount();
+    obj.allshow();
+    bank::count();
+    return 0;
+}
+
+
+
+
+
